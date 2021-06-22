@@ -232,7 +232,7 @@ class SessionRepository extends Repository
 
             $data = addslashes($data);
 
-            if (isset($data{255})) {
+            if (isset($data[255])) {
 
                 $other = [
                     'sesskey' => $this->session_id,
