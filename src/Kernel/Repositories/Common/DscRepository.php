@@ -937,20 +937,20 @@ class DscRepository extends Repository
     {
         $len = strlen($str);
         /* 为空或单个字符直接返回 */
-        if ($len == 0 || ord($str{$len - 1}) < 127) {
+        if ($len == 0 || ord($str[$len - 1]) < 127) {
             return $str;
         }
         /* 有前导字符的直接把前导字符去掉 */
-        if (ord($str{$len - 1}) >= 192) {
+        if (ord($str[$len - 1]) >= 192) {
             return substr($str, 0, $len - 1);
         }
         /* 有非独立的字符，先把非独立字符去掉，再验证非独立的字符是不是一个完整的字，不是连原来前导字符也截取掉 */
         $r_len = strlen(rtrim($str, "\x80..\xBF"));
-        if ($r_len == 0 || ord($str{$r_len - 1}) < 127) {
+        if ($r_len == 0 || ord($str[$r_len - 1]) < 127) {
             return $this->subStr($str, 0, $r_len);
         }
 
-        $as_num = ord(~$str{$r_len - 1});
+        $as_num = ord(~$str[$r_len - 1]);
         if ($as_num > (1 << (6 + $r_len - $len))) {
             return $str;
         } else {
