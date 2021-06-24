@@ -12,13 +12,7 @@ class CommonRepository extends Repository
 
     public function __construct()
     {
-        $shopConfig = cache('shop_config');
-        $shopConfig = !is_null($shopConfig) ? $shopConfig : false;
-        if ($shopConfig === false) {
-            $this->config = app(\App\Services\Common\ConfigService::class)->getConfig();
-        } else {
-            $this->config = $shopConfig;
-        }
+        $this->config = config_cache();
     }
 
     /**

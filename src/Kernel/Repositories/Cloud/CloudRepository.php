@@ -26,7 +26,7 @@ class CloudRepository
         $lockfile = base_path('storage/app/seeder/install.lock.php');
 
         if (file_exists($lockfile)) {
-            $shopConfig = cache('shop_config');
+            $shopConfig = config_cache();
             $shopConfig = !is_null($shopConfig) ? $shopConfig : false;
             if ($shopConfig === false) {
                 $this->config = app(\App\Services\Common\ConfigService::class)->getConfig();

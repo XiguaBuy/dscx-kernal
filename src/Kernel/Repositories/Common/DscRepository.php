@@ -31,16 +31,7 @@ class DscRepository extends Repository
     {
         $this->filesystem = $filesystem;
         $this->cloudRepository = $cloudRepository;
-
-        $config_cache_driver = "file";
-
-        $shopConfig = Cache::store($config_cache_driver)->get('shop_config');
-        $shopConfig = !is_null($shopConfig) ? $shopConfig : false;
-        if ($shopConfig === false) {
-            $this->config = app(\App\Services\Common\ConfigService::class)->getConfig();
-        } else {
-            $this->config = $shopConfig;
-        }
+        $this->config = config_cache();
 
         /* 获取缓存信息 end */
 
