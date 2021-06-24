@@ -10,6 +10,7 @@ use App\Models\ShopConfig;
 use App\Models\OrderGoods;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -31,30 +32,18 @@ class DscRepository extends Repository
         $this->filesystem = $filesystem;
         $this->cloudRepository = $cloudRepository;
 
-        /* 获取缓存信息 start */
-        $lockfile = base_path('storage/app/seeder/install.lock.php');
+        $config_cache_driver = "file";
 
-        if (file_exists($lockfile)) {
-            $shopConfig = cache('shop_config');
-            $shopConfig = !is_null($shopConfig) ? $shopConfig : false;
-            if ($shopConfig === false) {
-                $this->config = app(\App\Services\Common\ConfigService::class)->getConfig();
-            } else {
-                $this->config = $shopConfig;
-            }
+        $shopConfig = Cache::store($config_cache_driver)->get('shop_config');
+        $shopConfig = !is_null($shopConfig) ? $shopConfig : false;
+        if ($shopConfig === false) {
+            $this->config = app(\App\Services\Common\ConfigService::class)->getConfig();
+        } else {
+            $this->config = $shopConfig;
         }
+
         /* 获取缓存信息 end */
 
-        /* 限制文件被篡改 start */
-        $pathFile = __DIR__ . '/UrlRepository.php';
-        $strpos = file_get_contents($pathFile);
-
-        if (strpos($strpos, "SWOOLEC") === false && strpos($strpos, "private function localDate(") === false) {
-            dd("您非法篡改程序代码，已造成站点程序无法访问，请恢复被篡改相关程序文件！");
-        }
-        /* 限制文件被篡改 end */
-
-        app(UrlRepository::class)->getIsSwoolec();
     }
 
     /**
@@ -1139,21 +1128,7 @@ class DscRepository extends Repository
      */
     public function checkEmpower()
     {
-        $empower = $this->getDscKeyCert();
-
-        $url = $this->dscUrl();
-        $url = $this->dscTrimUrl($url);
-
-        $is_empower = 0;
-        if ($empower) {
-            $site = $this->dscTrimUrl($empower['site']);
-
-            if ($site == $url && $empower['activate'] == 1 && (isset($GLOBALS['_CFG']['appkey']) && $empower['appkey'] == $GLOBALS['_CFG']['appkey'])) {
-                $is_empower = 1;
-            }
-        }
-
-        return $is_empower;
+        return true;
     }
 
     /**
