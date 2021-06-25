@@ -14,7 +14,9 @@ class TimeRepository extends Repository
 
     public function __construct()
     {
-        $this->config = config_cache();
+        $this->config = [
+            'timezone'  =>  8
+        ];
     }
 
     /**

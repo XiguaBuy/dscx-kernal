@@ -12,7 +12,9 @@ class CommonRepository extends Repository
 
     public function __construct()
     {
-        $this->config = config_cache();
+        $this->config = [
+            'sms_type' => 1
+        ];
     }
 
     /**
