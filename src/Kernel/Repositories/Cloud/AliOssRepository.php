@@ -185,11 +185,11 @@ class AliOssRepository extends Repository
     {
         $res = [
             'id'            =>  1,
-            'bucket'        =>  env('OSS_BUCKET'),
-            'keyid'         =>  env('OSS_ACCESS_ID'),
-            'keysecret'     =>  env('OSS_ACCESS_KEY'),
+            'bucket'        =>  config('filesystems.disks.oss.bucket'),
+            'keyid'         =>  config('filesystems.disks.oss.access_id'),
+            'keysecret'     =>  config('filesystems.disks.oss.access_key'),
             'is_cname'      =>  1,
-            'endpoint'      =>  env('OSS_CDN_DOMAIN'),
+            'endpoint'      =>  config('filesystems.disks.oss.endpoint'),
             'regional'      =>  'hangzhou',
             'is_use'        =>  1,
             'is_delimg'     =>  0,
