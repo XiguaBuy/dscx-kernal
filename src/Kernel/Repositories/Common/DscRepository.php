@@ -41,7 +41,7 @@ class DscRepository extends Repository
             'lang'              =>  'zh-CN',
             'auto_mobile'       =>  1
         ];
-
+        $this->config = config_cache();
     }
 
     /**
