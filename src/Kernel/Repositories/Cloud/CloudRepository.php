@@ -26,14 +26,10 @@ class CloudRepository
         $lockfile = base_path('storage/app/seeder/install.lock.php');
 
         if (file_exists($lockfile)) {
-            $shopConfig = config_cache();
-            $shopConfig = !is_null($shopConfig) ? $shopConfig : false;
-            if ($shopConfig === false) {
-                $this->config = app(\App\Services\Common\ConfigService::class)->getConfig();
-            } else {
-                $this->config = $shopConfig;
-            }
-            /* 获取缓存信息 end */
+            $this->config = [
+                'cloud_storage'     =>  0,
+                'open_oss'          =>  1
+            ];
         } else {
             $this->config['cloud_storage'] = 0;
             $this->config['open_oss'] = 0;
