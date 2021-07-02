@@ -31,16 +31,6 @@ class DscRepository extends Repository
     {
         $this->filesystem = $filesystem;
         $this->cloudRepository = $cloudRepository;
-        $this->config = [
-            'integral_scale'    =>  100,
-            'price_format'      =>  0,
-            'currency_format'   =>  '€%s',
-            'open_oss'          =>  1,
-            'site_domain'       =>  'https://beautinow.com',
-            'no_picture'        =>  '../images/logopng.png',
-            'lang'              =>  'zh-CN',
-            'auto_mobile'       =>  1
-        ];
         $this->config = config_cache();
     }
 

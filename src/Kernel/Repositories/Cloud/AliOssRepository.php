@@ -183,20 +183,7 @@ class AliOssRepository extends Repository
      */
     public function bucketInfo()
     {
-        $res = [
-            'id'            =>  1,
-            'bucket'        =>  config('filesystems.disks.oss.bucket'),
-            'keyid'         =>  config('filesystems.disks.oss.access_id'),
-            'keysecret'     =>  config('filesystems.disks.oss.access_key'),
-            'is_cname'      =>  1,
-            'endpoint'      =>  config('filesystems.disks.oss.cdnDomain') . '/',
-            'regional'      =>  'hangzhou',
-            'is_use'        =>  1,
-            'is_delimg'     =>  0,
-            'outside_site'  =>  'https://beautinow-cdn.oss-cn-hangzhou.aliyuncs.com',
-            'inside_site'   =>  'https://beautinow-cdn.oss-cn-hangzhou-internal.aliyuncs.com'
-        ];
-//        $res = cache('oss_bucket_info');
+        $res = cache('oss_bucket_info');
         $res = !is_null($res) ? $res : false;
 
         if ($res === false) {
